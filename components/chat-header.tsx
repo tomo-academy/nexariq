@@ -51,8 +51,8 @@ function PureChatHeader({
       )}
 
       <div className="order-3 ml-auto hidden items-center gap-2 md:flex">
-        <NexariqIcon size={20} />
-        <span className="text-sm font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <NexariqIcon size={18} />
+        <span className="text-sm font-semibold">
           NEXARIQ
         </span>
       </div>
