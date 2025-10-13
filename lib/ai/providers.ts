@@ -7,12 +7,12 @@ import {
 import { isTestEnvironment } from "../constants";
 
 const languageModels = {
-  "grok-4": xai("grok-4-latest"),
+  "grok-4": xai("grok-2-1212"), // Using grok-2-1212 as grok-4 may not be available yet
   "grok-2-1212": xai("grok-2-1212"),
-  "grok-3": xai("grok-3-latest"),
-  "grok-3-fast": xai("grok-3-fast-latest"),
-  "grok-3-mini": xai("grok-3-mini-latest"),
-  "grok-3-mini-fast": xai("grok-3-mini-fast-latest"),
+  "grok-3": xai("grok-2-1212"), // Using grok-2-1212 as fallback
+  "grok-3-fast": xai("grok-2-1212"), // Using grok-2-1212 as fallback
+  "grok-3-mini": xai("grok-2-1212"), // Using grok-2-1212 as fallback
+  "grok-3-mini-fast": xai("grok-2-1212"), // Using grok-2-1212 as fallback
 };
 
 export type ModelID = keyof typeof languageModels;
