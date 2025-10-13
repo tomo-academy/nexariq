@@ -1,10 +1,7 @@
-<a href="https://chat.vercel.ai/">
-  <img alt="Next.js 14 and App Router-ready AI chatbot." src="app/(chat)/opengraph-image.png">
-  <h1 align="center">Chat SDK</h1>
-</a>
+<h1 align="center">NEXARIQ</h1>
 
 <p align="center">
-    Chat SDK is a free, open-source template built with Next.js and the AI SDK that helps you quickly build powerful chatbot applications.
+    NEXARIQ is a powerful AI chatbot application built with Next.js and the AI SDK, powered by xAI's Grok models.
 </p>
 
 <p align="center">
@@ -36,15 +33,18 @@
 
 ## Model Providers
 
-This template uses the [Vercel AI Gateway](https://vercel.com/docs/ai-gateway) to access multiple AI models through a unified interface. The default configuration includes [xAI](https://x.ai) models (`grok-2-vision-1212`, `grok-3-mini`) routed through the gateway.
+NEXARIQ uses [xAI](https://x.ai) models directly through the AI SDK. The following models are available:
 
-### AI Gateway Authentication
+- **grok-4** (default) - Latest Grok 4 model
+- **grok-2-1212** - Grok 2 (December 2024)
+- **grok-3** - Latest Grok 3 model
+- **grok-3-fast** - Fast variant of Grok 3
+- **grok-3-mini** - Compact Grok 3 model
+- **grok-3-mini-fast** - Fast compact variant
 
-**For Vercel deployments**: Authentication is handled automatically via OIDC tokens.
+### Authentication
 
-**For non-Vercel deployments**: You need to provide an AI Gateway API key by setting the `AI_GATEWAY_API_KEY` environment variable in your `.env.local` file.
-
-With the [AI SDK](https://ai-sdk.dev/docs/introduction), you can also switch to direct LLM providers like [OpenAI](https://openai.com), [Anthropic](https://anthropic.com), [Cohere](https://cohere.com/), and [many more](https://ai-sdk.dev/providers/ai-sdk-providers) with just a few lines of code.
+You need to provide an xAI API key by setting the `XAI_API_KEY` environment variable in your `.env.local` file. Get your API key from [https://console.x.ai/](https://console.x.ai/).
 
 ## Deploy Your Own
 
@@ -54,17 +54,18 @@ You can deploy your own version of the Next.js AI Chatbot to Vercel with one cli
 
 ## Running locally
 
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js AI Chatbot. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/projects/environment-variables) for this, but a `.env` file is all that is necessary.
+You will need to use the environment variables [defined in `.env.example`](.env.example) to run NEXARIQ. Create a `.env.local` file with the required variables.
 
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control access to your various AI and authentication provider accounts.
+> Note: You should not commit your `.env.local` file or it will expose secrets that will allow others to control access to your AI and authentication provider accounts.
 
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
+1. Copy `.env.example` to `.env.local`
+2. Add your xAI API key: `XAI_API_KEY=your_api_key_here`
+3. Configure other required environment variables (database, auth, etc.)
 
 ```bash
 pnpm install
+pnpm db:migrate
 pnpm dev
 ```
 
-Your app template should now be running on [localhost:3000](http://localhost:3000).
+Your app should now be running on [localhost:3000](http://localhost:3000).
