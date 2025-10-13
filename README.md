@@ -48,9 +48,14 @@ You need to provide an xAI API key by setting the `XAI_API_KEY` environment vari
 
 ## Deploy Your Own
 
-You can deploy your own version of the Next.js AI Chatbot to Vercel with one click:
+You can deploy NEXARIQ to Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/templates/next.js/nextjs-ai-chatbot)
+1. Fork or clone this repository
+2. Import to Vercel from https://vercel.com/new
+3. Configure environment variables (see [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md))
+4. Deploy!
+
+For detailed deployment instructions, see [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md).
 
 ## Running locally
 
