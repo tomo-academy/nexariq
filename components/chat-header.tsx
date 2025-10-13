@@ -6,7 +6,7 @@ import { memo } from "react";
 import { useWindowSize } from "usehooks-ts";
 import { SidebarToggle } from "@/components/sidebar-toggle";
 import { Button } from "@/components/ui/button";
-import { PlusIcon } from "./icons";
+import { PlusIcon, NexariqIcon } from "./icons";
 import { useSidebar } from "./ui/sidebar";
 import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
 
@@ -51,7 +51,8 @@ function PureChatHeader({
       )}
 
       <div className="order-3 ml-auto hidden items-center gap-2 md:flex">
-        <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+        <NexariqIcon size={20} />
+        <span className="text-sm font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           NEXARIQ
         </span>
       </div>

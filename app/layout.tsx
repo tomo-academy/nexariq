@@ -7,9 +7,33 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://chat.vercel.ai"),
-  title: "Next.js Chatbot Template",
-  description: "Next.js chatbot template using the AI SDK.",
+  metadataBase: new URL("https://nexariq.vercel.app"),
+  title: {
+    default: "NEXARIQ - AI Chatbot powered by xAI Grok",
+    template: "%s | NEXARIQ",
+  },
+  description: "NEXARIQ is a powerful AI chatbot application built with Next.js and powered by xAI's Grok models. Experience intelligent conversations with cutting-edge AI technology.",
+  keywords: ["AI", "chatbot", "xAI", "Grok", "NEXARIQ", "artificial intelligence", "conversational AI"],
+  authors: [{ name: "NEXARIQ" }],
+  creator: "NEXARIQ",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://nexariq.vercel.app",
+    title: "NEXARIQ - AI Chatbot powered by xAI Grok",
+    description: "Experience intelligent conversations with NEXARIQ, powered by xAI's advanced Grok models.",
+    siteName: "NEXARIQ",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NEXARIQ - AI Chatbot powered by xAI Grok",
+    description: "Experience intelligent conversations with NEXARIQ, powered by xAI's advanced Grok models.",
+    creator: "@nexariq",
+  },
+  icons: {
+    icon: "/icon",
+    apple: "/apple-icon",
+  },
 };
 
 export const viewport = {
