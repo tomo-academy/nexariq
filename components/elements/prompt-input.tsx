@@ -24,7 +24,7 @@ export type PromptInputProps = HTMLAttributes<HTMLFormElement>;
 export const PromptInput = ({ className, ...props }: PromptInputProps) => (
   <form
     className={cn(
-      "w-full overflow-hidden rounded-xl border bg-background shadow-xs",
+      "w-full overflow-hidden rounded-3xl border-2 border-border bg-background shadow-sm hover:shadow-md transition-shadow",
       className
     )}
     {...props}
@@ -72,14 +72,15 @@ export const PromptInputTextarea = ({
   return (
     <Textarea
       className={cn(
-        "w-full resize-none rounded-none border-none p-3 shadow-none outline-hidden ring-0",
+        "w-full resize-none rounded-none border-none px-4 py-3 shadow-none outline-hidden ring-0",
         disableAutoResize
           ? "field-sizing-fixed"
           : resizeOnNewLinesOnly
             ? "field-sizing-fixed"
             : "field-sizing-content max-h-[6lh]",
         "bg-transparent dark:bg-transparent",
-        "focus-visible:ring-0",
+        "focus-visible:ring-0 placeholder:text-muted-foreground/60",
+        "text-base",
         className
       )}
       name="message"
@@ -100,7 +101,7 @@ export const PromptInputToolbar = ({
   ...props
 }: PromptInputToolbarProps) => (
   <div
-    className={cn("flex items-center justify-between p-1", className)}
+    className={cn("flex items-center justify-between px-3 pb-2", className)}
     {...props}
   />
 );
@@ -172,7 +173,10 @@ export const PromptInputSubmit = ({
 
   return (
     <Button
-      className={cn("gap-1.5 rounded-lg", className)}
+      className={cn(
+        "gap-1.5 rounded-full h-9 w-9 p-0 bg-foreground text-background hover:bg-foreground/90 disabled:bg-muted disabled:text-muted-foreground transition-all",
+        className
+      )}
       size={size}
       type="submit"
       variant={variant}
