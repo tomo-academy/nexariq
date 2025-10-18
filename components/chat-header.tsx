@@ -53,7 +53,7 @@ function PureChatHeader({
 
       <div className="order-3 ml-auto hidden items-center gap-2 md:flex">
         <Image
-          src="https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c"
+          src="/images/TOMO.jpg"
           alt="TOMO Logo"
           width={18}
           height={18}
