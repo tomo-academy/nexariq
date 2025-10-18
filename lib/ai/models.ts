@@ -1,4 +1,4 @@
-export const DEFAULT_CHAT_MODEL: string = "Meow - Sas-1";
+export const DEFAULT_CHAT_MODEL: string = "meow-sas-1";
 
 export type ChatModel = {
   id: string;
@@ -8,13 +8,13 @@ export type ChatModel = {
 
 export const chatModels: ChatModel[] = [
   {
-    id: "Meow - Sas-1",
-    name: "Meow - Sas-1",
+    id: "meow-sas-1", // <-- Changed ID
+    name: "Meow - Sas-1", // <-- Kept the original display name
     description: "Specialized model with unique capabilities for various tasks",
   },
   {
-    id: "Meow-reasoning",
-    name: "Meow Reasoning",
+    id: "meow-reasoning", // <-- Changed ID
+    name: "Meow Reasoning", // <-- Kept the original display name
     description: "Advanced reasoning model with step-by-step thinking process",
   },
 ];
