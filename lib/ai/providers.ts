@@ -6,22 +6,13 @@ import {
 } from "ai";
 import { isTestEnvironment } from "../constants";
 
-const baseModel = xai("grok-2-1212");
-
 const languageModels = {
-  "grok-4": baseModel,
-  "grok-2-1212": baseModel,
-  "grok-3": baseModel,
-  "grok-3-fast": baseModel,
-  "grok-3-mini": baseModel,
-  "grok-3-mini-fast": baseModel,
-
-  // --- UPDATED MODELS ---
-  "meow-sas-1": baseModel, // <-- Changed ID to match models.ts
-  "meow-reasoning": wrapLanguageModel({ // <-- Changed ID to match models.ts
-    model: baseModel,
-    middleware: extractReasoningMiddleware({ tagName: "think" }),
-  }),
+  "grok-4": xai("grok-4-latest"),
+  "grok-2-1212": xai("grok-2-1212"),
+  "grok-3": xai("grok-3-latest"),
+  "grok-3-fast": xai("grok-3-fast-latest"),
+  "grok-3-mini": xai("grok-3-mini-latest"),
+  "grok-3-mini-fast": xai("grok-3-mini-fast-latest"),
 };
 
 export type ModelID = keyof typeof languageModels;
@@ -49,13 +40,13 @@ export const myProvider = isTestEnvironment
     })()
   : customProvider({
       languageModels: {
-        "chat-model": baseModel,
+        "chat-model": xai("grok-2-1212"),
         "chat-model-reasoning": wrapLanguageModel({
           model: xai("grok-3-mini-latest"),
           middleware: extractReasoningMiddleware({ tagName: "think" }),
         }),
-        "title-model": baseModel,
-        "artifact-model": baseModel,
+        "title-model": xai("grok-2-1212"),
+        "artifact-model": xai("grok-2-1212"),
         ...languageModels,
       },
     });
