@@ -42,24 +42,8 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    icon: [
-      {
-        url: "/favicon.ico",
-        sizes: "any",
-      },
-      {
-        url: "/images/TOMO.jpg",
-        type: "image/jpeg",
-        sizes: "32x32",
-      },
-    ],
-    apple: [
-      {
-        url: "/images/TOMO.jpg",
-        type: "image/jpeg",
-        sizes: "180x180",
-      },
-    ],
+    icon: "/images/TOMO.jpg",
+    apple: "/images/TOMO.jpg",
   },
 };
 
@@ -119,6 +103,10 @@ export default function RootLayout({
           rel="icon"
           href="/images/TOMO.jpg"
           type="image/jpeg"
+        />
+        <link
+          rel="apple-touch-icon"
+          href="/images/TOMO.jpg"
         />
         <script
           // biome-ignore lint/security/noDangerouslySetInnerHtml: "Required"
