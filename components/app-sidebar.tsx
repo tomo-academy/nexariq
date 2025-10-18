@@ -70,14 +70,14 @@ export function AppSidebar({ user }: { user: User | undefined }) {
               >
                 <div className="flex items-center gap-2 cursor-pointer rounded-md px-2 py-1 hover:bg-accent transition-colors">
                   <Image
-                    src="https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c"
+                    src="/images/TOMO.jpg"
                     alt="TOMO Logo"
                     width={20}
                     height={20}
                     className="rounded-sm"
                   />
                   <span className="font-semibold text-lg">
-                    NEXARIQ
+                    TOMO CHAT
                   </span>
                 </div>
               </Link>
