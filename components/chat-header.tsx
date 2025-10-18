@@ -51,14 +51,15 @@ function PureChatHeader({
         />
       )}
 
-      <div className="order-3 ml-auto hidden items-center gap-2 md:flex">
-        <Image
-          src="/images/TOMO.jpg"
-          alt="TOMO Logo"
-          width={18}
-          height={18}
-          className="rounded-sm"
-        />
+      <div className="order-3 flex-1 flex items-center justify-center gap-2">
+        <div className="relative w-4 h-4 overflow-hidden rounded-sm">
+          <Image
+            src="/images/TOMO.jpg"
+            alt="TOMO Logo"
+            fill
+            className="object-cover"
+          />
+        </div>
         <span className="text-sm font-semibold">
           TOMO CHAT
         </span>
