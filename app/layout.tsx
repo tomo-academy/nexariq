@@ -9,49 +9,49 @@ import { SessionProvider } from "next-auth/react";
 export const metadata: Metadata = {
   metadataBase: new URL("https://nexariq.vercel.app"),
   title: {
-    default: "NEXARIQ - AI Chatbot powered by xAI Grok",
-    template: "%s | NEXARIQ",
+    default: "TOMO CHAT - AI Chatbot powered by xAI Grok",
+    template: "%s | TOMO CHAT",
   },
-  description: "NEXARIQ is a powerful AI chatbot application built with Next.js and powered by xAI's Grok models. Experience intelligent conversations with cutting-edge AI technology.",
-  keywords: ["AI", "chatbot", "xAI", "Grok", "NEXARIQ", "artificial intelligence", "conversational AI"],
-  authors: [{ name: "NEXARIQ" }],
-  creator: "NEXARIQ",
+  description: "TOMO CHAT is a powerful AI chatbot application built with Next.js and powered by xAI's Grok models. Experience intelligent conversations with cutting-edge AI technology.",
+  keywords: ["AI", "chatbot", "xAI", "Grok", "TOMO CHAT", "artificial intelligence", "conversational AI"],
+  authors: [{ name: "TOMO CHAT" }],
+  creator: "TOMO CHAT",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://nexariq.vercel.app",
-    title: "NEXARIQ - AI Chatbot powered by xAI Grok",
-    description: "Experience intelligent conversations with NEXARIQ, powered by xAI's advanced Grok models.",
-    siteName: "NEXARIQ",
+    title: "TOMO CHAT - AI Chatbot powered by xAI Grok",
+    description: "Experience intelligent conversations with TOMO CHAT, powered by xAI's advanced Grok models.",
+    siteName: "TOMO CHAT",
     images: [
       {
-        url: "https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c",
+        url: "/images/TOMO.jpg",
         width: 1200,
         height: 630,
-        alt: "NEXARIQ Logo",
+        alt: "TOMO CHAT Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "NEXARIQ - AI Chatbot powered by xAI Grok",
-    description: "Experience intelligent conversations with NEXARIQ, powered by xAI's advanced Grok models.",
-    creator: "@nexariq",
+    title: "TOMO CHAT - AI Chatbot powered by xAI Grok",
+    description: "Experience intelligent conversations with TOMO CHAT, powered by xAI's advanced Grok models.",
+    creator: "@tomochat",
     images: [
-      "https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c",
+      "/images/TOMO.jpg",
     ],
   },
   icons: {
     icon: [
       {
-        url: "https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c",
+        url: "/images/TOMO.jpg",
         sizes: "any",
         type: "image/jpeg",
       },
     ],
     apple: [
       {
-        url: "https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c",
+        url: "/images/TOMO.jpg",
         sizes: "any",
         type: "image/jpeg",
       },
@@ -113,7 +113,7 @@ export default function RootLayout({
       <head>
         <link
           rel="icon"
-          href="https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c"
+          href="/images/TOMO.jpg"
           type="image/jpeg"
         />
         <script
