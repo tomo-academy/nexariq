@@ -69,13 +69,14 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 }}
               >
                 <div className="flex items-center gap-2 cursor-pointer rounded-md px-2 py-1 hover:bg-accent transition-colors">
-                  <Image
-                    src="/images/TOMO.jpg"
-                    alt="TOMO Logo"
-                    width={20}
-                    height={20}
-                    className="rounded-sm"
-                  />
+                  <div className="relative w-5 h-5 overflow-hidden rounded-sm">
+                    <Image
+                      src="/images/TOMO.jpg"
+                      alt="TOMO Logo"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
                   <span className="font-semibold text-lg">
                     TOMO CHAT
                   </span>
