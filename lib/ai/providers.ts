@@ -13,6 +13,13 @@ const languageModels = {
   "grok-3-fast": xai("grok-2-1212"), // Using grok-2-1212 as fallback
   "grok-3-mini": xai("grok-2-1212"), // Using grok-2-1212 as fallback
   "grok-3-mini-fast": xai("grok-2-1212"), // Using grok-2-1212 as fallback
+
+  // --- NEW MODELS ---
+  "Meow - Sas-1": xai("grok-2-1212"), // New standalone model
+  "Meow-reasoning": wrapLanguageModel({
+    model: xai("grok-2-1212"),
+    middleware: extractReasoningMiddleware({ tagName: "think" }),
+  }), // New standalone reasoning model
 };
 
 export type ModelID = keyof typeof languageModels;
