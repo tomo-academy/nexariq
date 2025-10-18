@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { unstable_serialize } from "swr/infinite";
-import { PlusIcon, TrashIcon, NexariqIcon } from "@/components/icons";
+import { PlusIcon, TrashIcon } from "@/components/icons";
 import { SidebarHistory, getChatHistoryPaginationKey } from "@/components/sidebar-history";
 import { SidebarUserNav } from "@/components/sidebar-user-nav";
 import { Button } from "@/components/ui/button";
@@ -68,7 +69,13 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 }}
               >
                 <div className="flex items-center gap-2 cursor-pointer rounded-md px-2 py-1 hover:bg-accent transition-colors">
-                  <NexariqIcon size={20} />
+                  <Image
+                    src="https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c"
+                    alt="TOMO Logo"
+                    width={20}
+                    height={20}
+                    className="rounded-sm"
+                  />
                   <span className="font-semibold text-lg">
                     NEXARIQ
                   </span>
