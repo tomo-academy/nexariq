@@ -44,16 +44,20 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/images/TOMO.jpg",
+        url: "/favicon.ico",
         sizes: "any",
+      },
+      {
+        url: "/images/TOMO.jpg",
         type: "image/jpeg",
+        sizes: "32x32",
       },
     ],
     apple: [
       {
         url: "/images/TOMO.jpg",
-        sizes: "any",
         type: "image/jpeg",
+        sizes: "180x180",
       },
     ],
   },
