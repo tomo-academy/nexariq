@@ -6,27 +6,12 @@ import {
 } from "ai";
 import { isTestEnvironment } from "../constants";
 
-const languageModels = {
-  "grok-4": xai("grok-2-1212"), // Using grok-2-1212 as grok-4 may not be available yet
-  "grok-2-1212": xai("grok-2-1212"),
-  "grok-3": xai("grok-2-1212"), // Using grok-2-1212 as fallback
-  "grok-3-fast": xai("grok-2-1212"), // Using grok-2-1212 as fallback
-  "grok-3-mini": xai("grok-2-1212"), // Using grok-2-1212 as fallback
-  "grok-3-mini-fast": xai("grok-2-1212"), // Using grok-2-1212 as fallback
+// Remove all the Grok models since we're only using Meow models now
+export type ModelID = "meow-sas-1" | "meow-reasoning";
 
-  // --- NEW MODELS ---
-  "Meow - Sas-1": xai("grok-2-1212"), // New standalone model
-  "Meow-reasoning": wrapLanguageModel({
-    model: xai("grok-2-1212"),
-    middleware: extractReasoningMiddleware({ tagName: "think" }),
-  }), // New standalone reasoning model
-};
+export const MODELS: ModelID[] = ["meow-sas-1", "meow-reasoning"];
 
-export type ModelID = keyof typeof languageModels;
-
-export const MODELS = Object.keys(languageModels) as ModelID[];
-
-export const defaultModel: ModelID = "grok-4";
+export const defaultModel: ModelID = "meow-sas-1";
 
 export const myProvider = isTestEnvironment
   ? (() => {
@@ -38,8 +23,8 @@ export const myProvider = isTestEnvironment
       } = require("./models.mock");
       return customProvider({
         languageModels: {
-          "chat-model": chatModel,
-          "chat-model-reasoning": reasoningModel,
+          "meow-sas-1": chatModel,
+          "meow-reasoning": reasoningModel,
           "title-model": titleModel,
           "artifact-model": artifactModel,
         },
@@ -47,13 +32,12 @@ export const myProvider = isTestEnvironment
     })()
   : customProvider({
       languageModels: {
-        "chat-model": xai("grok-2-1212"),
-        "chat-model-reasoning": wrapLanguageModel({
+        "meow-sas-1": xai("grok-2-1212"), // Using grok-2-1212 as the underlying model
+        "meow-reasoning": wrapLanguageModel({
           model: xai("grok-3-mini-latest"),
           middleware: extractReasoningMiddleware({ tagName: "think" }),
         }),
         "title-model": xai("grok-2-1212"),
         "artifact-model": xai("grok-2-1212"),
-        ...languageModels,
       },
     });
