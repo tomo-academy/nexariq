@@ -1,4 +1,4 @@
-export const DEFAULT_CHAT_MODEL: string = "meow-sas-1";
+export const DEFAULT_CHAT_MODEL: string = "Meow - Sas-1";
 
 export type ChatModel = {
   id: string;
@@ -8,26 +8,13 @@ export type ChatModel = {
 
 export const chatModels: ChatModel[] = [
   {
-    id: "meow-sas-1",
-    name: "Meow SAS-1", // Changed to match ID pattern better
-    description: "Advanced multimodal model with vision and text capabilities",
+    id: "Meow - Sas-1",
+    name: "Meow - Sas-1",
+    description: "Specialized model with unique capabilities for various tasks",
   },
   {
-    id: "meow-reasoning",
+    id: "Meow-reasoning",
     name: "Meow Reasoning",
-    description: "Uses advanced chain-of-thought reasoning for complex problems",
+    description: "Advanced reasoning model with step-by-step thinking process",
   },
 ];
-
-// Export the two models separately as requested
-export const meowSas1Model: ChatModel = {
-  id: "meow-sas-1",
-  name: "Meow SAS-1", // Changed to match ID pattern better
-  description: "Advanced multimodal model with vision and text capabilities",
-};
-
-export const meowReasoningModel: ChatModel = {
-  id: "meow-reasoning",
-  name: "Meow Reasoning",
-  description: "Uses advanced chain-of-thought reasoning for complex problems",
-};
