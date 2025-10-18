@@ -6,18 +6,20 @@ import {
 } from "ai";
 import { isTestEnvironment } from "../constants";
 
-const languageModels = {
-  "grok-4": xai("grok-2-1212"), // Using grok-2-1212 as grok-4 may not be available yet
-  "grok-2-1212": xai("grok-2-1212"),
-  "grok-3": xai("grok-2-1212"), // Using grok-2-1212 as fallback
-  "grok-3-fast": xai("grok-2-1212"), // Using grok-2-1212 as fallback
-  "grok-3-mini": xai("grok-2-1212"), // Using grok-2-1212 as fallback
-  "grok-3-mini-fast": xai("grok-2-1212"), // Using grok-2-1212 as fallback
+const baseModel = xai("grok-2-1212");
 
-  // --- NEW MODELS ---
-  "Meow - Sas-1": xai("grok-2-1212"),
-  "Meow-reasoning": wrapLanguageModel({
-    model: xai("grok-2-1212"),
+const languageModels = {
+  "grok-4": baseModel,
+  "grok-2-1212": baseModel,
+  "grok-3": baseModel,
+  "grok-3-fast": baseModel,
+  "grok-3-mini": baseModel,
+  "grok-3-mini-fast": baseModel,
+
+  // --- UPDATED MODELS ---
+  "meow-sas-1": baseModel, // <-- Changed ID to match models.ts
+  "meow-reasoning": wrapLanguageModel({ // <-- Changed ID to match models.ts
+    model: baseModel,
     middleware: extractReasoningMiddleware({ tagName: "think" }),
   }),
 };
@@ -47,13 +49,13 @@ export const myProvider = isTestEnvironment
     })()
   : customProvider({
       languageModels: {
-        "chat-model": xai("grok-2-1212"),
+        "chat-model": baseModel,
         "chat-model-reasoning": wrapLanguageModel({
           model: xai("grok-3-mini-latest"),
           middleware: extractReasoningMiddleware({ tagName: "think" }),
         }),
-        "title-model": xai("grok-2-1212"),
-        "artifact-model": xai("grok-2-1212"),
+        "title-model": baseModel,
+        "artifact-model": baseModel,
         ...languageModels,
       },
     });
