@@ -23,16 +23,39 @@ export const metadata: Metadata = {
     title: "NEXARIQ - AI Chatbot powered by xAI Grok",
     description: "Experience intelligent conversations with NEXARIQ, powered by xAI's advanced Grok models.",
     siteName: "NEXARIQ",
+    images: [
+      {
+        url: "https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c",
+        width: 1200,
+        height: 630,
+        alt: "NEXARIQ Logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "NEXARIQ - AI Chatbot powered by xAI Grok",
     description: "Experience intelligent conversations with NEXARIQ, powered by xAI's advanced Grok models.",
     creator: "@nexariq",
+    images: [
+      "https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c",
+    ],
   },
   icons: {
-    icon: "/icon",
-    apple: "/apple-icon",
+    icon: [
+      {
+        url: "https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c",
+        sizes: "any",
+        type: "image/jpeg",
+      },
+    ],
+    apple: [
+      {
+        url: "https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c",
+        sizes: "any",
+        type: "image/jpeg",
+      },
+    ],
   },
 };
 
@@ -88,6 +111,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link
+          rel="icon"
+          href="https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c"
+          type="image/jpeg"
+        />
         <script
           // biome-ignore lint/security/noDangerouslySetInnerHtml: "Required"
           dangerouslySetInnerHTML={{
