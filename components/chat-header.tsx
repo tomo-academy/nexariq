@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { memo } from "react";
 import { useWindowSize } from "usehooks-ts";
 import { SidebarToggle } from "@/components/sidebar-toggle";
 import { Button } from "@/components/ui/button";
-import { PlusIcon, NexariqIcon } from "./icons";
+import { PlusIcon } from "./icons";
 import { useSidebar } from "./ui/sidebar";
 import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
 
@@ -51,9 +52,15 @@ function PureChatHeader({
       )}
 
       <div className="order-3 ml-auto hidden items-center gap-2 md:flex">
-        <NexariqIcon size={18} />
+        <Image
+          src="https://z-cdn-media.chatglm.cn/files/c04d33fc-5e5a-4ab6-bea6-a11b88918ae7_TOMO.jpg?auth_key=1791089382-ea973e46df5748e0a8ff4ceedd8f2e49-0-a03e0352f92afb6e9ca5f4a2382dea5c"
+          alt="TOMO Logo"
+          width={18}
+          height={18}
+          className="rounded-sm"
+        />
         <span className="text-sm font-semibold">
-          NEXARIQ
+          TOMO CHAT
         </span>
       </div>
     </header>
