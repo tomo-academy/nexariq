@@ -188,71 +188,17 @@ export function MessageReasoning({
       {isExpanded && (
         <div className="bg-slate-900/50 backdrop-blur-sm">
           <ReasoningContent className="px-0 py-0">
-            <div className="space-y-0">
-              {steps.length > 0 ? (
-                steps.map((step, index) => (
-                  <div
-                    key={index}
-                    className={cn(
-                      "relative border-b border-slate-800/50 last:border-b-0",
-                      "transition-all duration-500",
-                      index === currentStep && isLoading && "bg-slate-800/30"
-                    )}
-                  >
-                    {index < steps.length - 1 && (
-                      <div className="absolute left-5 top-12 w-0.5 h-full bg-gradient-to-b from-indigo-500/30 to-transparent"></div>
-                    )}
-                    <div className="flex gap-4 p-5">
-                      {/* Step indicator */}
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 text-white text-sm font-bold flex-shrink-0 shadow-lg z-10 relative">
-                        {step.status === "complete" ? (
-                          <CheckCircle size={18} />
-                        ) : step.status === "active" ? (
-                          <Loader2 size={18} className="animate-spin" />
-                        ) : (
-                          index + 1
-                        )}
-                      </div>
-
-                      {/* Step content */}
-                      <div className="flex-1 pb-2">
-                        <h4 className="font-semibold text-white text-base mb-2">
-                          {step.title}
-                        </h4>
-                        {step.content && (
-                          <p className="text-slate-300 text-sm leading-relaxed">
-                            {step.content}
-                          </p>
-                        )}
-                        
-                        {/* Progress indicator for active step */}
-                        {step.status === "active" && isLoading && (
-                          <div className="mt-3 w-full bg-slate-700/50 rounded-full h-1.5 overflow-hidden">
-                            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 h-1.5 rounded-full animate-pulse" style={{ width: "60%" }}></div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="p-5">
-                  <p className="text-slate-300 text-sm italic">
-                    {reasoning}
-                  </p>
-                </div>
-              )}
-
-              {isLoading && (
-                <div className="flex items-center gap-2 p-5 pt-2">
-                  <div className="w-2 h-2 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-slate-400 font-medium">
-                    Processing next step...
-                  </span>
-                </div>
-              )}
-            </div>
+            {reasoning}
           </ReasoningContent>
+          
+          {isLoading && (
+            <div className="flex items-center gap-2 px-4 pb-4">
+              <div className="w-2 h-2 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full animate-pulse"></div>
+              <span className="text-xs text-slate-400 font-medium">
+                Processing next step...
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>
