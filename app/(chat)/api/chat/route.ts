@@ -244,9 +244,10 @@ export async function POST(request: Request) {
 
         result.consumeStream();
 
+        // FIXED: Only send reasoning for the reasoning model
         dataStream.merge(
           result.toUIMessageStream({
-            sendReasoning: true,
+            sendReasoning: selectedChatModel === "meow-reasoning",
           })
         );
       },
