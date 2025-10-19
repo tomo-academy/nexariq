@@ -1,3 +1,5 @@
+// lib/ai/models.ts
+
 export const DEFAULT_CHAT_MODEL: string = "meow-flash";
 
 export type ChatModel = {
