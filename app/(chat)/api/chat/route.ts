@@ -43,7 +43,7 @@ import { ChatSDKError } from "@/lib/errors";
 import type { ChatMessage } from "@/lib/types";
 import type { AppUsage } from "@/lib/usage";
 import { convertToUIMessages, generateUUID } from "@/lib/utils";
-import { generateTitleFromUserMessage } from "../../actions";
+import { generateTitleFromUserMessage } from "@/app/(chat)/actions";
 import { type PostRequestBody, postRequestBodySchema } from "./schema";
 
 export const maxDuration = 60;
@@ -92,7 +92,8 @@ export async function POST(request: Request) {
   try {
     const json = await request.json();
     requestBody = postRequestBodySchema.parse(json);
-  } catch (_) {
+  } catch (error) {
+    console.error("Request validation error:", error);
     return new ChatSDKError("bad_request:api").toResponse();
   }
 
@@ -148,11 +149,13 @@ export async function POST(request: Request) {
     const messagesFromDb = await getMessagesByChatId({ id });
     const uiMessages = [...convertToUIMessages(messagesFromDb), message];
 
-    const { longitude, latitude, city, country } = geolocation(request);
+    const geo = geolocation(request);
+    const { longitude, latitude, city, country } = geo;
 
+    // Convert string values to numbers if they exist
     const requestHints: RequestHints = {
-      longitude,
-      latitude,
+      longitude: longitude ? parseFloat(longitude) : undefined,
+      latitude: latitude ? parseFloat(latitude) : undefined,
       city,
       country,
     };
@@ -271,7 +274,8 @@ export async function POST(request: Request) {
           }
         }
       },
-      onError: () => {
+      onError: (error) => {
+        console.error("Stream error:", error);
         return "Oops, an error occurred!";
       },
     });
