@@ -1,3 +1,5 @@
+// app/(chat)/actions.ts
+
 "use server";
 
 import { generateText, type UIMessage } from "ai";
