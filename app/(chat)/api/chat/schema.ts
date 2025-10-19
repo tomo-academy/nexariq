@@ -1,3 +1,5 @@
+// app/(chat)/api/chat/schema.ts
+
 import { z } from "zod";
 
 const textPartSchema = z.object({
@@ -15,13 +17,16 @@ const filePartSchema = z.object({
 const partSchema = z.union([textPartSchema, filePartSchema]);
 
 export const postRequestBodySchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
   message: z.object({
-    id: z.string().uuid(),
-    role: z.enum(["user"]),
+    id: z.string(),
+    role: z.enum(["user", "assistant", "system"]),
     parts: z.array(partSchema),
   }),
-  selectedChatModel: z.enum(["chat-model", "chat-model-reasoning"]),
+  selectedChatModel: z.enum([
+    "meow-flash",
+    "meow-reasoning",
+  ]),
   selectedVisibilityType: z.enum(["public", "private"]),
 });
 
