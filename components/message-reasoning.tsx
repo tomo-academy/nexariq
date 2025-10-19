@@ -27,19 +27,6 @@ export function MessageReasoning({
     }
   }, [isLoading]);
 
-  // Format the reasoning string with HTML-like structure for better display
-  const formatReasoningContent = (content: string) => {
-    // Replace numbered steps with styled HTML
-    let formattedContent = content.replace(/^\d+\.\s+(.+?)(?=\n\d+\.|\n\n|$)/gms, 
-      '<div class="reasoning-step"><span class="step-number">$&</span></div>');
-    
-    // Replace bullet points with styled HTML
-    formattedContent = formattedContent.replace(/^-\s+(.+?)(?=\n-|\n\n|$)/gms, 
-      '<div class="reasoning-step"><span class="step-bullet">$&</span></div>');
-    
-    return formattedContent;
-  };
-
   return (
     <div
       className={cn(
