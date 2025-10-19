@@ -1,5 +1,3 @@
-// app/(chat)/api/chat/route.ts
-
 import { geolocation } from "@vercel/functions";
 import {
   convertToModelMessages,
@@ -244,7 +242,7 @@ export async function POST(request: Request) {
 
         result.consumeStream();
 
-        // FIXED: Only send reasoning for the reasoning model
+        // Only send reasoning for the reasoning model
         dataStream.merge(
           result.toUIMessageStream({
             sendReasoning: selectedChatModel === "meow-reasoning",
