@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckIcon, CopyIcon } from "lucide-react";
+import { CheckIcon, CopyIcon, CodeIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes, ReactNode } from "react";
 import { createContext, useContext, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -37,11 +37,22 @@ export const CodeBlock = ({
   <CodeBlockContext.Provider value={{ code }}>
     <div
       className={cn(
-        "relative w-full overflow-hidden rounded-md border bg-background text-foreground",
+        "relative w-full overflow-hidden rounded-lg border",
+        "bg-gradient-to-br from-slate-900 to-slate-800",
+        "border-slate-700/50 shadow-xl",
         className
       )}
       {...props}
     >
+      <div className="flex items-center justify-between px-4 py-2 border-b border-slate-700/50 bg-slate-800/50">
+        <div className="flex items-center gap-2">
+          <CodeIcon className="h-4 w-4 text-indigo-400" />
+          <span className="text-xs font-medium text-slate-300">{language}</span>
+        </div>
+        {children && (
+          <div className="flex items-center gap-2">{children}</div>
+        )}
+      </div>
       <div className="relative">
         <SyntaxHighlighter
           className="overflow-hidden dark:hidden"
@@ -78,28 +89,30 @@ export const CodeBlock = ({
             margin: 0,
             padding: "1rem",
             fontSize: "0.875rem",
-            background: "hsl(var(--background))",
-            color: "hsl(var(--foreground))",
+            background: "transparent",
+            color: "#e2e8f0",
             overflowX: "auto",
             overflowWrap: "break-word",
             wordBreak: "break-all",
           }}
           language={language}
           lineNumberStyle={{
-            color: "hsl(var(--muted-foreground))",
+            color: "#64748b",
             paddingRight: "1rem",
             minWidth: "2.5rem",
           }}
           showLineNumbers={showLineNumbers}
-          style={oneDark}
+          style={{
+            ...oneDark,
+            'pre[class*="language-"]': {
+              ...oneDark['pre[class*="language-"]'],
+              background: "transparent",
+              margin: 0,
+            },
+          }}
         >
           {code}
         </SyntaxHighlighter>
-        {children && (
-          <div className="absolute top-2 right-2 flex items-center gap-2">
-            {children}
-          </div>
-        )}
       </div>
     </div>
   </CodeBlockContext.Provider>
@@ -142,7 +155,10 @@ export const CodeBlockCopyButton = ({
 
   return (
     <Button
-      className={cn("shrink-0", className)}
+      className={cn(
+        "shrink-0 h-7 w-7 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50",
+        className
+      )}
       onClick={copyToClipboard}
       size="icon"
       variant="ghost"
