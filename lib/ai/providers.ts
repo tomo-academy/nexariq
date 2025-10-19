@@ -1,3 +1,5 @@
+// lib/ai/providers.ts
+
 import { xai } from "@ai-sdk/xai";
 import {
   customProvider,
@@ -7,19 +9,15 @@ import {
 import { isTestEnvironment } from "../constants";
 
 const languageModels = {
-  "grok-4": xai("grok-4-latest"),
-  "grok-2-1212": xai("grok-2-1212"),
-  "grok-3": xai("grok-3-latest"),
-  "grok-3-fast": xai("grok-3-fast-latest"),
-  "grok-3-mini": xai("grok-3-mini-latest"),
-  "grok-3-mini-fast": xai("grok-3-mini-fast-latest"),
+  "meow-flash": xai("grok-3-fast-latest"),
+  "meow-reasoning": xai("grok-3-latest"),
 };
 
 export type ModelID = keyof typeof languageModels;
 
 export const MODELS = Object.keys(languageModels) as ModelID[];
 
-export const defaultModel: ModelID = "grok-4";
+export const defaultModel: ModelID = "meow-flash";
 
 export const myProvider = isTestEnvironment
   ? (() => {
@@ -31,8 +29,8 @@ export const myProvider = isTestEnvironment
       } = require("./models.mock");
       return customProvider({
         languageModels: {
-          "chat-model": chatModel,
-          "chat-model-reasoning": reasoningModel,
+          "meow-flash": chatModel,
+          "meow-reasoning": reasoningModel,
           "title-model": titleModel,
           "artifact-model": artifactModel,
         },
@@ -40,13 +38,12 @@ export const myProvider = isTestEnvironment
     })()
   : customProvider({
       languageModels: {
-        "chat-model": xai("grok-2-1212"),
-        "chat-model-reasoning": wrapLanguageModel({
-          model: xai("grok-3-mini-latest"),
+        "meow-flash": xai("grok-3-fast-latest"),
+        "meow-reasoning": wrapLanguageModel({
+          model: xai("grok-3-latest"),
           middleware: extractReasoningMiddleware({ tagName: "think" }),
         }),
         "title-model": xai("grok-2-1212"),
         "artifact-model": xai("grok-2-1212"),
-        ...languageModels,
       },
     });
