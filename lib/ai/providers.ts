@@ -1,3 +1,5 @@
+// lib/ai/providers.ts
+
 import { xai } from "@ai-sdk/xai";
 import {
   customProvider,
