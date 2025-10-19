@@ -306,6 +306,11 @@
   margin-bottom: 1rem;
   position: relative;
   padding-left: 2rem;
+  transition: all 0.3s ease;
+}
+
+.reasoning-step:hover {
+  background-color: rgba(99, 102, 241, 0.1);
 }
 
 .step-number, .step-bullet {
@@ -321,7 +326,84 @@
   color: #60a5fa;
 }
 
-/* Grok-style reasoning content */
+/* Z.ai style reasoning components */
+.reasoning-step-indicator {
+  position: relative;
+  z-index: 10;
+}
+
+.reasoning-step-indicator::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(168, 85, 247, 0.3));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.reasoning-step:hover .reasoning-step-indicator::before {
+  opacity: 1;
+}
+
+.reasoning-progress {
+  height: 6px;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+.reasoning-progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.reasoning-pulse {
+  position: relative;
+}
+
+.reasoning-pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Enhanced reasoning content styling */
 .dark .prose {
   color: #e2e8f0;
 }
@@ -377,6 +459,7 @@
 .dark .prose a:hover {
   color: #93c5fd;
 }
+
 @theme inline {
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
