@@ -1,5 +1,3 @@
-// app/(chat)/api/chat/route.ts
-
 import { geolocation } from "@vercel/functions";
 import {
   convertToModelMessages,
@@ -43,7 +41,7 @@ import { ChatSDKError } from "@/lib/errors";
 import type { ChatMessage } from "@/lib/types";
 import type { AppUsage } from "@/lib/usage";
 import { convertToUIMessages, generateUUID } from "@/lib/utils";
-import { generateTitleFromUserMessage } from "@/app/(chat)/actions";
+import { generateTitleFromUserMessage } from "../../actions";
 import { type PostRequestBody, postRequestBodySchema } from "./schema";
 
 export const maxDuration = 60;
@@ -92,8 +90,7 @@ export async function POST(request: Request) {
   try {
     const json = await request.json();
     requestBody = postRequestBodySchema.parse(json);
-  } catch (error) {
-    console.error("Request validation error:", error);
+  } catch (_) {
     return new ChatSDKError("bad_request:api").toResponse();
   }
 
@@ -149,13 +146,11 @@ export async function POST(request: Request) {
     const messagesFromDb = await getMessagesByChatId({ id });
     const uiMessages = [...convertToUIMessages(messagesFromDb), message];
 
-    const geo = geolocation(request);
-    const { longitude, latitude, city, country } = geo;
+    const { longitude, latitude, city, country } = geolocation(request);
 
-    // Convert string values to numbers if they exist
     const requestHints: RequestHints = {
-      longitude: longitude ? parseFloat(longitude) : undefined,
-      latitude: latitude ? parseFloat(latitude) : undefined,
+      longitude,
+      latitude,
       city,
       country,
     };
@@ -186,7 +181,7 @@ export async function POST(request: Request) {
           messages: convertToModelMessages(uiMessages),
           stopWhen: stepCountIs(5),
           experimental_activeTools:
-            selectedChatModel === "meow-reasoning"
+            selectedChatModel === "chat-model-reasoning"
               ? []
               : [
                   "getWeather",
@@ -274,8 +269,7 @@ export async function POST(request: Request) {
           }
         }
       },
-      onError: (error) => {
-        console.error("Stream error:", error);
+      onError: () => {
         return "Oops, an error occurred!";
       },
     });
@@ -296,6 +290,16 @@ export async function POST(request: Request) {
 
     if (error instanceof ChatSDKError) {
       return error.toResponse();
+    }
+
+    // Check for Vercel AI Gateway credit card error
+    if (
+      error instanceof Error &&
+      error.message?.includes(
+        "AI Gateway requires a valid credit card on file to service requests"
+      )
+    ) {
+      return new ChatSDKError("bad_request:activate_gateway").toResponse();
     }
 
     console.error("Unhandled error in chat API:", error, { vercelId });
