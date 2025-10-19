@@ -36,13 +36,14 @@ export const myProvider = isTestEnvironment
     })()
   : customProvider({
       languageModels: {
-        "meow-flash": xai("grok-3-fast-latest"),
+        "meow-flash": wrapLanguageModel({
+          model: xai("grok-3-fast-latest"),
+        }),
         "meow-reasoning": wrapLanguageModel({
           model: xai("grok-3-latest"),
           middleware: extractReasoningMiddleware({ tagName: "think" }),
         }),
         "title-model": xai("grok-2-1212"),
         "artifact-model": xai("grok-2-1212"),
-        ...languageModels,
       },
     });
