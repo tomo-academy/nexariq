@@ -38,10 +38,10 @@ export const regularPrompt =
   "I'm Meow, an AI built by Nexariq. Nice to meet you! What's on your mind? 😊\n\nYou are a friendly assistant! Keep your responses concise and helpful.";
 
 export type RequestHints = {
-  latitude: Geo["latitude"];
-  longitude: Geo["longitude"];
-  city: Geo["city"];
-  country: Geo["country"];
+  latitude: number | undefined;
+  longitude: number | undefined;
+  city: string | undefined;
+  country: string | undefined;
 };
 
 export const getRequestPromptFromHints = (requestHints: RequestHints) => `\
