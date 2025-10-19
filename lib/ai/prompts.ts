@@ -1,3 +1,5 @@
+// lib/ai/prompts.ts
+
 import type { Geo } from "@vercel/functions";
 import type { ArtifactKind } from "@/components/artifact";
 
