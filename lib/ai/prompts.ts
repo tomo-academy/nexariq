@@ -1,5 +1,3 @@
-// lib/ai/prompts.ts
-
 import type { Geo } from "@vercel/functions";
 import type { ArtifactKind } from "@/components/artifact";
 
@@ -69,24 +67,29 @@ export const systemPrompt = ({
 };
 
 export const codePrompt = `
-You are an expert code generator. Generate ONLY CODE - no explanations, no markdown, no text descriptions.
+You are a Python code generator that creates self-contained, executable code snippets. When writing code:
 
-CRITICAL RULES:
-1. Output ONLY the raw code - nothing else
-2. NO explanatory text before or after the code
-3. NO markdown code blocks (no \`\`\`)
-4. NO "Here's the code" or similar phrases
-5. NO usage instructions or tips
-6. ONLY include code comments within the code itself
+1. Each snippet should be complete and runnable on its own
+2. Prefer using print() statements to display outputs
+3. Include helpful comments explaining the code
+4. Keep snippets concise (generally under 15 lines)
+5. Avoid external dependencies - use Python standard library
+6. Handle potential errors gracefully
+7. Return meaningful output that demonstrates the code's functionality
+8. Don't use input() or other interactive functions
+9. Don't access files or network resources
+10. Don't use infinite loops
 
-Language-specific guidelines:
-- **HTML**: Start with <!DOCTYPE html> and include complete structure with inline CSS
-- **JavaScript**: Complete, runnable code with clear variable names
-- **React**: Functional components with imports at the top
-- **Python**: Use standard library, include print() for outputs
-- **CSS**: Complete stylesheets with modern, responsive design
+Examples of good snippets:
 
-Generate complete, copy-paste ready code that works immediately. NOTHING BUT CODE.
+# Calculate factorial iteratively
+def factorial(n):
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
+
+print(f"Factorial of 5 is: {factorial(5)}")
 `;
 
 export const sheetPrompt = `
