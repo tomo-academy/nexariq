@@ -1,47 +1,42 @@
-import { xai } from "@ai-sdk/xai";
-import {
-  customProvider,
-  extractReasoningMiddleware,
-  wrapLanguageModel,
-} from "ai";
-import { isTestEnvironment } from "../constants";
+// lib/ai/prompts.ts
 
-const languageModels = {
-  "meow-flash": xai("grok-3-fast-latest"),
-  "meow-reasoning": xai("grok-3-latest"),
-};
+export interface RequestHints {
+  longitude?: number;
+  latitude?: number;
+  city?: string;
+  country?: string;
+}
 
-export type ModelID = keyof typeof languageModels;
+export function systemPrompt({
+  selectedChatModel,
+  requestHints,
+}: {
+  selectedChatModel: string;
+  requestHints: RequestHints;
+}) {
+  const basePrompt = `I'm Meow, an AI built by Nexariq. Nice to meet you! What's on your mind? 😊
 
-export const MODELS = Object.keys(languageModels) as ModelID[];
+You are a helpful AI assistant with access to various tools to help users.`;
 
-export const defaultModel: ModelID = "meow-flash";
+  const modelSpecificPrompt = selectedChatModel === "meow-reasoning" 
+    ? "\n\nYou are using enhanced reasoning capabilities. Think step-by-step and explain your reasoning process."
+    : "";
 
-export const myProvider = isTestEnvironment
-  ? (() => {
-      const {
-        artifactModel,
-        chatModel,
-        reasoningModel,
-        titleModel,
-      } = require("./models.mock");
-      return customProvider({
-        languageModels: {
-          "meow-flash": chatModel,
-          "meow-reasoning": reasoningModel,
-          "title-model": titleModel,
-          "artifact-model": artifactModel,
-        },
-      });
-    })()
-  : customProvider({
-      languageModels: {
-        "meow-flash": xai("grok-3-fast-latest"),
-        "meow-reasoning": wrapLanguageModel({
-          model: xai("grok-3-latest"),
-          middleware: extractReasoningMiddleware({ tagName: "think" }),
-        }),
-        "title-model": xai("grok-2-1212"),
-        "artifact-model": xai("grok-2-1212"),
-      },
-    });
+  const locationPrompt = requestHints.city && requestHints.country
+    ? `\n\nThe user is located in ${requestHints.city}, ${requestHints.country}. You can use this information to provide more relevant responses.`
+    : "";
+
+  return `${basePrompt}${modelSpecificPrompt}${locationPrompt}`;
+}
+
+export function codePrompt() {
+  return `You are an expert programmer. Write clean, well-commented code that follows best practices.`;
+}
+
+export function updateDocumentPrompt() {
+  return `Update the document based on the user's request while maintaining the existing structure and formatting.`;
+}
+
+export function sheetPrompt() {
+  return `You are an expert in spreadsheets and data analysis. Create or modify spreadsheets according to the user's requirements.`;
+}
