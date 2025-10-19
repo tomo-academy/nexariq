@@ -1,7 +1,7 @@
 "use client";
 
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
-import { BrainIcon, ChevronDownIcon, SparklesIcon } from "lucide-react";
+import { BrainIcon, ChevronDownIcon, SparklesIcon, Loader2Icon, CheckCircleIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { createContext, memo, useContext, useEffect, useState } from "react";
 import {
@@ -99,9 +99,9 @@ export const Reasoning = memo(
       >
         <div
           className={cn(
-            "w-full rounded-lg overflow-hidden",
-            "bg-gradient-to-r from-slate-900/90 to-slate-800/90 backdrop-blur-sm",
-            "border border-slate-700/50 shadow-xl"
+            "w-full rounded-xl overflow-hidden shadow-xl",
+            "bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-sm",
+            "border border-slate-700/50 shadow-2xl"
           )}
         >
           <Collapsible
@@ -127,9 +127,9 @@ export const ReasoningTrigger = memo(
     return (
       <CollapsibleTrigger
         className={cn(
-          "w-full px-4 py-3 flex items-center justify-between",
-          "bg-gradient-to-r from-indigo-900/30 to-purple-900/20",
-          "hover:from-indigo-900/40 hover:to-purple-900/30 transition-all duration-200",
+          "w-full px-5 py-4 flex items-center justify-between",
+          "bg-gradient-to-r from-indigo-900/40 to-purple-900/30",
+          "hover:from-indigo-900/50 hover:to-purple-900/40 transition-all duration-300",
           "border-b border-slate-700/50",
           className
         )}
@@ -138,27 +138,38 @@ export const ReasoningTrigger = memo(
         {children ?? (
           <>
             <div className="flex items-center gap-3">
-              {/* Icon */}
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg">
-                <BrainIcon size={18} className="drop-shadow" />
+              {/* Icon with animation */}
+              <div className="relative">
+                <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg">
+                  <BrainIcon size={20} className="drop-shadow" />
+                </div>
+                {isStreaming && (
+                  <div className="absolute -top-1 -right-1">
+                    <div className="relative">
+                      <SparklesIcon size={16} className="text-purple-400 animate-pulse" />
+                      <div className="absolute inset-0 rounded-full bg-purple-400/20 animate-ping"></div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Title and Status */}
               <div className="flex flex-col items-start">
-                <span className="font-semibold text-white text-sm flex items-center gap-2">
+                <span className="font-semibold text-white text-base flex items-center gap-2">
                   Thinking Process
                   {isStreaming && (
                     <span className="flex items-center gap-1">
-                      <SparklesIcon size={14} className="text-purple-400 animate-pulse" />
+                      <Loader2Icon size={16} className="text-purple-400 animate-spin" />
                     </span>
                   )}
                 </span>
                 {isStreaming ? (
                   <span className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-                    Processing...
+                    Analyzing the problem...
                   </span>
                 ) : (
                   <span className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                    <CheckCircleIcon size={12} className="text-green-400" />
                     Thought for {duration}s
                   </span>
                 )}
@@ -169,13 +180,13 @@ export const ReasoningTrigger = memo(
             <div className="flex items-center gap-2">
               {isStreaming && (
                 <div className="flex items-center gap-1 mr-2">
-                  <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
                   <div
-                    className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"
+                    className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"
                     style={{ animationDelay: "0.2s" }}
                   ></div>
                   <div
-                    className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse"
+                    className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"
                     style={{ animationDelay: "0.4s" }}
                   ></div>
                 </div>
@@ -210,8 +221,8 @@ export const ReasoningContent = memo(
       )}
       {...props}
     >
-      <div className="px-4 py-4">
-        <Response className="grid gap-3 text-slate-200 text-sm">{children}</Response>
+      <div className="px-0 py-0">
+        <Response className="grid gap-0 text-slate-200 text-sm">{children}</Response>
       </div>
     </CollapsibleContent>
   )
