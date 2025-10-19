@@ -1,5 +1,3 @@
-// lib/ai/prompts.ts
-
 import type { Geo } from "@vercel/functions";
 import type { ArtifactKind } from "@/components/artifact";
 
@@ -62,7 +60,17 @@ export const systemPrompt = ({
   const requestPrompt = getRequestPromptFromHints(requestHints);
 
   if (selectedChatModel === "meow-reasoning") {
-    return `${regularPrompt}\n\n${requestPrompt}\n\nYou are using enhanced reasoning capabilities. Think step-by-step and explain your reasoning process.`;
+    return `${regularPrompt}\n\n${requestPrompt}\n\nYou are using enhanced reasoning capabilities. Before providing your final answer, think through the problem step-by-step and show your reasoning process. Format your reasoning between
+
+<details type="reasoning" done=true" duration="0" view="" last_tool_call_name="">
+<summary>Thought for 0 seconds</summary>
+> tags, then provide your final answer outside the tags.
+> 
+> Example format:
+> 
+> Your step-by-step reasoning process here...
+</details>
+Your final answer here.`;
   }
 
   return `${regularPrompt}\n\n${requestPrompt}\n\n${artifactsPrompt}`;
