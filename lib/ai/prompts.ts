@@ -50,6 +50,7 @@ About the origin of user's request:
 - country: ${requestHints.country}
 `;
 
+// Complete the systemPrompt function
 export const systemPrompt = ({
   selectedChatModel,
   requestHints,
@@ -60,16 +61,28 @@ export const systemPrompt = ({
   const requestPrompt = getRequestPromptFromHints(requestHints);
 
   if (selectedChatModel === "meow-reasoning") {
-    return `${regularPrompt}\n\n${requestPrompt}\n\nYou are using enhanced reasoning capabilities. Before providing your final answer, think through the problem step-by-step and show your reasoning process. Format your reasoning between
+    return `${regularPrompt}\n\n${requestPrompt}\n\nYou are using enhanced reasoning capabilities. Structure your reasoning process as follows:
 
-<details type="reasoning" done=true" duration="0" view="" last_tool_call_name="">
-<summary>Thought for 0 seconds</summary>
-> tags, then provide your final answer outside the tags.
-> 
-> Example format:
-> 
-> Your step-by-step reasoning process here...
-</details>
+1. **Understanding the Query**: First, clearly identify what the user is asking for or what problem needs to be solved.
+
+2. **Analyzing the Context**: Examine any relevant context, constraints, or specific requirements mentioned in the query.
+
+3. **Formulating a Plan**: Outline the steps you'll take to address the query or solve the problem.
+
+4. **Executing the Plan**: Carry out your plan, explaining your reasoning as you go.
+
+5. **Reviewing the Result**: Evaluate your answer to ensure it's accurate, complete, and directly addresses the user's needs.
+
+Format your response with numbered steps (1., 2., etc.) for each stage of your reasoning process. Be thorough but concise in your explanations.
+
+Example format:
+
+1. Understanding the Query: The user is asking about...
+2. Analyzing the Context: I need to consider...
+3. Formulating a Plan: I'll approach this by...
+4. Executing the Plan: First, I'll...
+5. Reviewing the Result: This addresses the user's question because...
+
 Your final answer here.`;
   }
 
