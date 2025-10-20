@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  outputFileTracingIncludes: {
+    '/api/**': ['./node_modules/**'],
+  },
+  // Optimize bundle size
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 };
 
 export default nextConfig;

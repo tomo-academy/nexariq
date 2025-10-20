@@ -1,0 +1,27 @@
+# Test files
+tests/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Documentation
+*.md
+!README.md
+
+# Development files
+.git/
+.github/
+.vscode/
+
+# Playwright
+playwright.config.ts
+playwright-report/
+test-results/
+
+# Build artifacts
+.next/cache
+
+# Other
+.DS_Store
+Thumbs.db
