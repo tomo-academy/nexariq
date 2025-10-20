@@ -4,6 +4,7 @@
     NEXARIQ is a powerful AI chatbot application built with Next.js and the AI SDK, powered by xAI's Grok models.
 </p>
 
+
 <p align="center">
   <a href="https://chat-sdk.dev"><strong>Read Docs</strong></a> ·
   <a href="#features"><strong>Features</strong></a> ·
