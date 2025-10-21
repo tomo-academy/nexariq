@@ -1,12 +1,30 @@
 import equal from "fast-deep-equal";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { useCopyToClipboard } from "usehooks-ts";
 import type { Vote } from "@/lib/db/schema";
 import type { ChatMessage } from "@/lib/types";
 import { Action, Actions } from "./elements/actions";
-import { CopyIcon, PencilEditIcon, ThumbDownIcon, ThumbUpIcon } from "./icons";
+import { 
+  CopyIcon, 
+  PencilEditIcon, 
+  ThumbDownIcon, 
+  ThumbUpIcon,
+  ShareIcon,
+  BookmarkIcon,
+  MoreHorizontalIcon,
+  CodeIcon,
+  DownloadIcon
+} from "./icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Button } from "./ui/button";
 
 export function PureMessageActions({
   chatId,
@@ -23,6 +41,7 @@ export function PureMessageActions({
 }) {
   const { mutate } = useSWRConfig();
   const [_, copyToClipboard] = useCopyToClipboard();
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   if (isLoading) {
     return null;
@@ -31,6 +50,12 @@ export function PureMessageActions({
   const textFromParts = message.parts
     ?.filter((part) => part.type === "text")
     .map((part) => part.text)
+    .join("\n")
+    .trim();
+
+  const codeFromParts = message.parts
+    ?.filter((part) => part.type === "code" || (part.type === "text" && part.text.includes("```")))
+    .map((part) => part.text || part.content)
     .join("\n")
     .trim();
 
