@@ -1,5 +1,3 @@
-import { generateId } from "ai";
-
 export const isProductionEnvironment = process.env.NODE_ENV === "production";
 export const isDevelopmentEnvironment = process.env.NODE_ENV === "development";
 export const isTestEnvironment = Boolean(
@@ -10,5 +8,5 @@ export const isTestEnvironment = Boolean(
 
 export const guestRegex = /^guest-\d+$/;
 
-// Use a simple approach for dummy password to avoid edge runtime issues
-export const DUMMY_PASSWORD = Buffer.from(generateId()).toString('base64');
+// Use a static dummy password to avoid module initialization issues
+export const DUMMY_PASSWORD = "ZHVtbXktcGFzc3dvcmQtaGFzaA=="; // Base64 encoded dummy

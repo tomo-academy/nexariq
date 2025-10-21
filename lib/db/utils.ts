@@ -1,5 +1,3 @@
-import { generateId } from "ai";
-
 // Conditional import for bcrypt-ts to avoid edge runtime issues
 let genSaltSync: any, hashSync: any;
 
@@ -25,7 +23,8 @@ export function generateHashedPassword(password: string) {
 }
 
 export function generateDummyPassword() {
-  const password = generateId();
+  // Use a static password instead of generateId to avoid circular dependencies
+  const password = "dummy-password-" + Date.now().toString(36);
   const hashedPassword = generateHashedPassword(password);
   return hashedPassword;
 }
