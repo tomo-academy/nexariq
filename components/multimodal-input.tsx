@@ -85,19 +85,18 @@ function PureMultimodalInput({
 
   const adjustHeight = useCallback(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "44px";
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
     }
   }, []);
 
   useEffect(() => {
-    if (textareaRef.current) {
-      adjustHeight();
-    }
-  }, [adjustHeight]);
+    adjustHeight();
+  }, [input, adjustHeight]);
 
   const resetHeight = useCallback(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "44px";
+      textareaRef.current.style.height = "auto";
     }
   }, []);
 
@@ -109,13 +108,10 @@ function PureMultimodalInput({
   useEffect(() => {
     if (textareaRef.current) {
       const domValue = textareaRef.current.value;
-      // Prefer DOM value over localStorage to handle hydration
       const finalValue = domValue || localStorageInput || "";
       setInput(finalValue);
       adjustHeight();
     }
-    // Only run once after hydration
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adjustHeight, localStorageInput, setInput]);
 
   useEffect(() => {
@@ -233,7 +229,7 @@ function PureMultimodalInput({
   );
 
   return (
-    <div className={cn("relative flex w-full flex-col gap-4", className)}>
+    <div className={cn("relative flex w-full flex-col", className)}>
       {messages.length === 0 &&
         attachments.length === 0 &&
         uploadQueue.length === 0 && (
@@ -245,7 +241,7 @@ function PureMultimodalInput({
         )}
 
       <input
-        className="-top-4 -left-4 pointer-events-none fixed size-0.5 opacity-0"
+        className="sr-only"
         multiple
         onChange={handleFileChange}
         ref={fileInputRef}
@@ -253,92 +249,103 @@ function PureMultimodalInput({
         type="file"
       />
 
-      <PromptInput
-        className="rounded-xl border border-border bg-background p-3 shadow-xs transition-all duration-200 focus-within:border-border hover:border-muted-foreground/50"
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (status !== "ready") {
-            toast.error("Please wait for the model to finish its response!");
-          } else {
-            submitForm();
-          }
-        }}
-      >
-        {(attachments.length > 0 || uploadQueue.length > 0) && (
-          <div
-            className="flex flex-row items-end gap-2 overflow-x-scroll"
-            data-testid="attachments-preview"
-          >
-            {attachments.map((attachment) => (
-              <PreviewAttachment
-                attachment={attachment}
-                key={attachment.url}
-                onRemove={() => {
-                  setAttachments((currentAttachments) =>
-                    currentAttachments.filter((a) => a.url !== attachment.url)
-                  );
-                  if (fileInputRef.current) {
-                    fileInputRef.current.value = "";
+      {/* DeepSeek-style input container */}
+      <div className="relative mx-auto w-full max-w-4xl">
+        <div className="relative rounded-xl border border-gray-200 bg-white shadow-sm transition-all duration-200 focus-within:border-blue-500 focus-within:shadow-md dark:border-gray-700 dark:bg-gray-800">
+          {/* Attachments preview */}
+          {(attachments.length > 0 || uploadQueue.length > 0) && (
+            <div className="border-b border-gray-100 p-3 dark:border-gray-700">
+              <div className="flex flex-wrap gap-2">
+                {attachments.map((attachment) => (
+                  <PreviewAttachment
+                    attachment={attachment}
+                    key={attachment.url}
+                    onRemove={() => {
+                      setAttachments((currentAttachments) =>
+                        currentAttachments.filter((a) => a.url !== attachment.url)
+                      );
+                      if (fileInputRef.current) {
+                        fileInputRef.current.value = "";
+                      }
+                    }}
+                  />
+                ))}
+                {uploadQueue.map((filename) => (
+                  <PreviewAttachment
+                    attachment={{
+                      url: "",
+                      name: filename,
+                      contentType: "",
+                    }}
+                    isUploading={true}
+                    key={filename}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Input area */}
+          <div className="flex items-end gap-2 p-3">
+            {/* Left side tools */}
+            <div className="flex items-center gap-1">
+              <AttachmentsButton
+                fileInputRef={fileInputRef}
+                selectedModelId={selectedModelId}
+                status={status}
+              />
+            </div>
+
+            {/* Text input */}
+            <div className="flex-1">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={handleInput}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    if (status === "ready" && input.trim()) {
+                      submitForm();
+                    }
                   }
                 }}
+                placeholder="Message DeepSeek..."
+                className="max-h-[200px] min-h-[24px] w-full resize-none border-0 bg-transparent text-sm leading-6 text-gray-900 placeholder-gray-500 outline-none dark:text-gray-100 dark:placeholder-gray-400"
+                rows={1}
+                data-testid="multimodal-input"
               />
-            ))}
+            </div>
 
-            {uploadQueue.map((filename) => (
-              <PreviewAttachment
-                attachment={{
-                  url: "",
-                  name: filename,
-                  contentType: "",
-                }}
-                isUploading={true}
-                key={filename}
+            {/* Right side tools */}
+            <div className="flex items-end gap-1">
+              <ModelSelectorCompact
+                onModelChange={onModelChange}
+                selectedModelId={selectedModelId}
               />
-            ))}
+              
+              {status === "submitted" ? (
+                <StopButton setMessages={setMessages} stop={stop} />
+              ) : (
+                <Button
+                  onClick={submitForm}
+                  disabled={!input.trim() || uploadQueue.length > 0 || status !== "ready"}
+                  className={cn(
+                    "h-8 w-8 rounded-lg p-0 transition-all duration-200",
+                    input.trim() && status === "ready"
+                      ? "bg-blue-600 text-white hover:bg-blue-700"
+                      : "bg-gray-100 text-gray-400 dark:bg-gray-700 dark:text-gray-500"
+                  )}
+                >
+                  <ArrowUpIcon size={16} />
+                </Button>
+              )}
+            </div>
           </div>
-        )}
-        <div className="flex flex-row items-start gap-1 sm:gap-2">
-          <PromptInputTextarea
-            autoFocus
-            className="grow resize-none border-0! border-none! bg-transparent p-2 text-sm outline-none ring-0 [-ms-overflow-style:none] [scrollbar-width:none] placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-scrollbar]:hidden"
-            data-testid="multimodal-input"
-            disableAutoResize={true}
-            maxHeight={200}
-            minHeight={44}
-            onChange={handleInput}
-            placeholder="Send a message..."
-            ref={textareaRef}
-            rows={1}
-            value={input}
-          />{" "}
-          <Context {...contextProps} />
         </div>
-        <PromptInputToolbar className="!border-top-0 border-t-0! p-0 shadow-none dark:border-0 dark:border-transparent!">
-          <PromptInputTools className="gap-0 sm:gap-0.5">
-            <AttachmentsButton
-              fileInputRef={fileInputRef}
-              selectedModelId={selectedModelId}
-              status={status}
-            />
-            <ModelSelectorCompact
-              onModelChange={onModelChange}
-              selectedModelId={selectedModelId}
-            />
-          </PromptInputTools>
-
-          {status === "submitted" ? (
-            <StopButton setMessages={setMessages} stop={stop} />
-          ) : (
-            <PromptInputSubmit
-              className="size-8 rounded-full bg-primary text-primary-foreground transition-colors duration-200 hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground"
-              disabled={!input.trim() || uploadQueue.length > 0}
-              status={status}
-            >
-              <ArrowUpIcon size={14} />
-            </PromptInputSubmit>
-          )}
-        </PromptInputToolbar>
-      </PromptInput>
+      </div>
+      
+      <Context {...contextProps} />
     </div>
   );
 }
@@ -375,11 +382,11 @@ function PureAttachmentsButton({
   status: UseChatHelpers<ChatMessage>["status"];
   selectedModelId: string;
 }) {
-  const isReasoningModel = selectedModelId === "chat-model-reasoning";
+  const isReasoningModel = selectedModelId === "meow-reasoning";
 
   return (
     <Button
-      className="aspect-square h-8 rounded-lg p-1 transition-colors hover:bg-accent"
+      className="h-8 w-8 rounded-lg bg-transparent p-0 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
       data-testid="attachments-button"
       disabled={status !== "ready" || isReasoningModel}
       onClick={(event) => {
@@ -388,7 +395,7 @@ function PureAttachmentsButton({
       }}
       variant="ghost"
     >
-      <PaperclipIcon size={14} style={{ width: 14, height: 14 }} />
+      <PaperclipIcon size={16} />
     </Button>
   );
 }
@@ -427,22 +434,28 @@ function PureModelSelectorCompact({
       value={selectedModel?.name}
     >
       <Trigger
-        className="flex h-8 items-center gap-2 rounded-lg border-0 bg-background px-2 text-foreground shadow-none transition-colors hover:bg-accent focus:outline-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+        className="flex h-8 items-center gap-2 rounded-lg border-0 bg-transparent px-2 text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
         type="button"
       >
-        <CpuIcon size={16} />
-        <span className="hidden font-medium text-xs sm:block">
+        <CpuIcon size={14} />
+        <span className="text-xs font-medium">
           {selectedModel?.name}
         </span>
-        <ChevronDownIcon size={16} />
+        <ChevronDownIcon size={12} />
       </Trigger>
-      <PromptInputModelSelectContent className="min-w-[260px] p-0">
-        <div className="flex flex-col gap-px">
+      <PromptInputModelSelectContent className="min-w-[280px] rounded-xl border border-gray-200 bg-white p-1 shadow-lg dark:border-gray-700 dark:bg-gray-800">
+        <div className="flex flex-col gap-1">
           {chatModels.map((model) => (
-            <SelectItem key={model.id} value={model.name}>
-              <div className="truncate font-medium text-xs">{model.name}</div>
-              <div className="mt-px truncate text-[10px] text-muted-foreground leading-tight">
-                {model.description}
+            <SelectItem 
+              key={model.id} 
+              value={model.name}
+              className="rounded-lg px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <div className="flex flex-col gap-1">
+                <div className="font-medium text-gray-900 dark:text-gray-100">{model.name}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  {model.description}
+                </div>
               </div>
             </SelectItem>
           ))}
@@ -463,7 +476,7 @@ function PureStopButton({
 }) {
   return (
     <Button
-      className="size-7 rounded-full bg-foreground p-1 text-background transition-colors duration-200 hover:bg-foreground/90 disabled:bg-muted disabled:text-muted-foreground"
+      className="h-8 w-8 rounded-lg bg-red-500 p-0 text-white transition-colors duration-200 hover:bg-red-600"
       data-testid="stop-button"
       onClick={(event) => {
         event.preventDefault();
@@ -471,7 +484,7 @@ function PureStopButton({
         setMessages((messages) => messages);
       }}
     >
-      <StopIcon size={14} />
+      <StopIcon size={16} />
     </Button>
   );
 }

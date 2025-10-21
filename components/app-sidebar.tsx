@@ -57,10 +57,10 @@ export function AppSidebar({ user }: { user: User | undefined }) {
 
   return (
     <>
-      <Sidebar className="group-data-[side=left]:border-r-0">
-        <SidebarHeader>
+      <Sidebar className="group-data-[side=left]:border-r border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
+        <SidebarHeader className="border-b border-gray-100 dark:border-gray-800">
           <SidebarMenu>
-            <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center justify-between p-4">
               <Link
                 className="flex flex-row items-center gap-3"
                 href="/"
@@ -68,8 +68,8 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   setOpenMobile(false);
                 }}
               >
-                <div className="flex items-center gap-2 cursor-pointer rounded-md px-2 py-1 hover:bg-accent transition-colors">
-                  <div className="relative w-5 h-5 overflow-hidden rounded-sm">
+                <div className="flex items-center gap-3 cursor-pointer rounded-lg px-2 py-1 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  <div className="relative w-6 h-6 overflow-hidden rounded-md">
                     <Image
                       src="/images/TOMO.jpg"
                       alt="TOMO Logo"
@@ -77,70 +77,75 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                       className="object-cover"
                     />
                   </div>
-                  <span className="font-semibold text-lg">
-                    TOMO CHAT
+                  <span className="font-semibold text-lg text-gray-900 dark:text-gray-100">
+                    DeepSeek
                   </span>
                 </div>
               </Link>
-              <div className="flex flex-row gap-1">
-                {user && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        className="h-8 p-1 md:h-fit md:p-2"
-                        onClick={() => setShowDeleteAllDialog(true)}
-                        type="button"
-                        variant="ghost"
-                      >
-                        <TrashIcon />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent align="end" className="hidden md:block">
-                      Delete All Chats
-                    </TooltipContent>
-                  </Tooltip>
-                )}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      className="h-8 p-1 md:h-fit md:p-2"
-                      onClick={() => {
-                        setOpenMobile(false);
-                        router.push("/");
-                        router.refresh();
-                      }}
-                      type="button"
-                      variant="ghost"
-                    >
-                      <PlusIcon />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent align="end" className="hidden md:block">
-                    New Chat
-                  </TooltipContent>
-                </Tooltip>
-              </div>
+              
+              <Button
+                className="h-9 w-9 rounded-lg border border-gray-200 bg-white p-0 text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+                onClick={() => {
+                  setOpenMobile(false);
+                  router.push("/");
+                  router.refresh();
+                }}
+                type="button"
+                variant="ghost"
+              >
+                <PlusIcon size={16} />
+              </Button>
             </div>
           </SidebarMenu>
         </SidebarHeader>
-        <SidebarContent>
-          <SidebarHistory user={user} />
+        
+        <SidebarContent className="px-2">
+          <div className="py-2">
+            <SidebarHistory user={user} />
+          </div>
         </SidebarContent>
-        <SidebarFooter>{user && <SidebarUserNav user={user} />}</SidebarFooter>
+        
+        <SidebarFooter className="border-t border-gray-100 p-4 dark:border-gray-800">
+          <div className="flex items-center justify-between">
+            {user && <SidebarUserNav user={user} />}
+            {user && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    className="h-8 w-8 rounded-lg bg-transparent p-0 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                    onClick={() => setShowDeleteAllDialog(true)}
+                    type="button"
+                    variant="ghost"
+                  >
+                    <TrashIcon size={16} />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent align="end">
+                  Delete All Chats
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
+        </SidebarFooter>
       </Sidebar>
 
       <AlertDialog onOpenChange={setShowDeleteAllDialog} open={showDeleteAllDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete all chats?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-gray-900 dark:text-gray-100">Delete all chats?</AlertDialogTitle>
+            <AlertDialogDescription className="text-gray-600 dark:text-gray-400">
               This action cannot be undone. This will permanently delete all your
               chats and remove them from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDeleteAll}>
+            <AlertDialogCancel className="rounded-lg border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleDeleteAll}
+              className="rounded-lg bg-red-600 text-white hover:bg-red-700"
+            >
               Delete All
             </AlertDialogAction>
           </AlertDialogFooter>

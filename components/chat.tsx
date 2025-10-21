@@ -156,26 +156,28 @@ export function Chat({
 
   return (
     <>
-      <div className="overscroll-behavior-contain flex h-dvh min-w-0 touch-pan-y flex-col bg-background">
+      <div className="flex h-full min-w-0 flex-col bg-white dark:bg-gray-900">
         <ChatHeader
           chatId={id}
           isReadonly={isReadonly}
           selectedVisibilityType={initialVisibilityType}
         />
 
-        <Messages
-          chatId={id}
-          isArtifactVisible={isArtifactVisible}
-          isReadonly={isReadonly}
-          messages={messages}
-          regenerate={regenerate}
-          selectedModelId={initialChatModel}
-          setMessages={setMessages}
-          status={status}
-          votes={votes}
-        />
+        <div className="flex-1 overflow-hidden">
+          <Messages
+            chatId={id}
+            isArtifactVisible={isArtifactVisible}
+            isReadonly={isReadonly}
+            messages={messages}
+            regenerate={regenerate}
+            selectedModelId={initialChatModel}
+            setMessages={setMessages}
+            status={status}
+            votes={votes}
+          />
+        </div>
 
-        <div className="sticky bottom-0 z-1 mx-auto flex w-full max-w-4xl gap-2 border-t-0 bg-background px-2 pb-3 md:px-4 md:pb-4">
+        <div className="border-t border-gray-100 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           {!isReadonly && (
             <MultimodalInput
               attachments={attachments}

@@ -1,9 +1,9 @@
-import { compare } from "bcrypt-ts";
 import NextAuth, { type DefaultSession } from "next-auth";
 import type { DefaultJWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import { DUMMY_PASSWORD } from "@/lib/constants";
 import { createGuestUser, getUser } from "@/lib/db/queries";
+import { safeCompare } from "@/lib/auth/safe-compare";
 import { authConfig } from "./auth.config";
 
 export type UserType = "guest" | "regular";
@@ -45,18 +45,18 @@ export const {
         const users = await getUser(email);
 
         if (users.length === 0) {
-          await compare(password, DUMMY_PASSWORD);
+          await safeCompare(password, DUMMY_PASSWORD);
           return null;
         }
 
         const [user] = users;
 
         if (!user.password) {
-          await compare(password, DUMMY_PASSWORD);
+          await safeCompare(password, DUMMY_PASSWORD);
           return null;
         }
 
-        const passwordsMatch = await compare(password, user.password);
+        const passwordsMatch = await safeCompare(password, user.password);
 
         if (!passwordsMatch) {
           return null;

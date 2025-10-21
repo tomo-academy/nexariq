@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronDown, Sparkles, Brain, Loader2, CheckCircle } from "lucide-react";
-import {
-  Reasoning,
-  ReasoningContent,
-  ReasoningTrigger,
-} from "./elements/reasoning";
+import { ChevronDown, Brain, Loader2, CheckCircle, Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type MessageReasoningProps = {
@@ -18,167 +13,88 @@ export function MessageReasoning({
   isLoading,
   reasoning,
 }: MessageReasoningProps) {
-  const [hasBeenStreaming, setHasBeenStreaming] = useState(isLoading);
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [displayText, setDisplayText] = useState("");
 
+  // Simulate streaming text effect when loading
   useEffect(() => {
-    if (isLoading) {
-      setHasBeenStreaming(true);
-    }
-  }, [isLoading]);
-
-  // Parse reasoning into structured steps
-  const parseReasoningSteps = (content: string) => {
-    const lines = content.split("\n").filter((line) => line.trim());
-    const steps: Array<{ title: string; content: string; status: "pending" | "active" | "complete" }> = [];
-    let currentStep: { title: string; content: string[] } = { title: "", content: [] };
-
-    lines.forEach((line) => {
-      const trimmed = line.trim();
-
-      // Detect step numbers (1., 2., etc.)
-      if (/^\d+\./.test(trimmed)) {
-        if (currentStep.title) {
-          steps.push({
-            ...currentStep,
-            content: currentStep.content.join(" "),
-            status: "complete"
-          });
-        }
-        currentStep = {
-          title: trimmed.replace(/^\d+\.\s*/, ""),
-          content: []
-        };
-      } else if (trimmed.startsWith("-") || trimmed.startsWith("•")) {
-        if (currentStep.title) {
-          steps.push({
-            ...currentStep,
-            content: currentStep.content.join(" "),
-            status: "complete"
-          });
-        }
-        currentStep = {
-          title: trimmed.replace(/^[-•]\s*/, ""),
-          content: []
-        };
-      } else if (trimmed) {
-        currentStep.content.push(trimmed);
-      }
-    });
-
-    if (currentStep.title) {
-      steps.push({
-        ...currentStep,
-        content: currentStep.content.join(" "),
-        status: isLoading ? "active" : "complete"
-      });
-    }
-
-    // Set the first step as active if loading
-    if (isLoading && steps.length > 0) {
-      steps[0].status = "active";
-    }
-
-    return steps;
-  };
-
-  const steps = parseReasoningSteps(reasoning);
-
-  // Simulate step progression during loading
-  useEffect(() => {
-    if (isLoading && steps.length > 0) {
+    if (isLoading && reasoning) {
+      let index = 0;
       const interval = setInterval(() => {
-        setCurrentStep((prev) => {
-          if (prev < steps.length - 1) {
-            return prev + 1;
-          }
-          return prev;
-        });
-      }, 2000);
+        if (index <= reasoning.length) {
+          setDisplayText(reasoning.slice(0, index));
+          index += 2; // Show 2 characters at a time for smoother animation
+        } else {
+          clearInterval(interval);
+        }
+      }, 20);
 
       return () => clearInterval(interval);
+    } else {
+      setDisplayText(reasoning);
     }
-  }, [isLoading, steps.length]);
+  }, [isLoading, reasoning]);
 
   return (
-    <div
-      className={cn(
-        "w-full rounded-xl overflow-hidden shadow-xl",
-        "bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-sm",
-        "border border-slate-700/50 shadow-2xl"
-      )}
-      data-testid="message-reasoning"
-    >
-      {/* Header */}
+    <div className="my-4">
+      {/* DeepSeek-style thinking header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className={cn(
-          "w-full px-5 py-4 flex items-center justify-between",
-          "bg-gradient-to-r from-indigo-900/40 to-purple-900/30",
-          "hover:from-indigo-900/50 hover:to-purple-900/40 transition-all duration-300",
-          "border-b border-slate-700/50"
+          "flex w-full items-center justify-between rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-left transition-all duration-200 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-750",
+          isExpanded && "rounded-b-none border-b-transparent"
         )}
+        data-testid="message-reasoning"
       >
         <div className="flex items-center gap-3">
-          {/* Icon with animation */}
+          {/* Icon */}
           <div className="relative">
-            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg">
-              <Brain size={20} className="drop-shadow" />
+            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-100 dark:bg-blue-900/50">
+              <Brain size={14} className="text-blue-600 dark:text-blue-400" />
             </div>
             {isLoading && (
-              <div className="absolute -top-1 -right-1">
-                <div className="relative">
-                  <Sparkles size={16} className="text-purple-400 animate-pulse" />
-                  <div className="absolute inset-0 rounded-full bg-purple-400/20 animate-ping"></div>
-                </div>
+              <div className="absolute -right-1 -top-1">
+                <Loader2 size={12} className="animate-spin text-blue-500" />
               </div>
             )}
           </div>
 
-          {/* Title and Status */}
-          <div className="flex flex-col items-start">
-            <span className="font-semibold text-white text-base flex items-center gap-2">
-              Thinking Process
-              {isLoading && (
-                <span className="flex items-center gap-1">
-                  <Loader2 size={16} className="text-purple-400 animate-spin" />
-                </span>
-              )}
+          {/* Title and status */}
+          <div className="flex flex-col">
+            <span className="font-medium text-sm text-gray-900 dark:text-gray-100">
+              Thinking
             </span>
             {isLoading ? (
-              <span className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-                Analyzing the problem...
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                Processing...
               </span>
             ) : (
-              <span className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
-                <CheckCircle size={12} className="text-green-400" />
-                Reasoning complete
+              <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                <CheckCircle size={10} className="text-green-500" />
+                Complete
               </span>
             )}
           </div>
         </div>
 
-        {/* Right side controls */}
+        {/* Right side */}
         <div className="flex items-center gap-2">
           {isLoading && (
-            <div className="flex items-center gap-1 mr-2">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-              <div
-                className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"
-                style={{ animationDelay: "0.2s" }}
-              ></div>
-              <div
-                className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"
-                style={{ animationDelay: "0.4s" }}
-              ></div>
+            <div className="flex items-center gap-1">
+              <div className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse"></div>
+              <div className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" style={{ animationDelay: "0.2s" }}></div>
+              <div className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" style={{ animationDelay: "0.4s" }}></div>
             </div>
           )}
+          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+            {isExpanded ? <EyeOff size={12} /> : <Eye size={12} />}
+            <span className="hidden sm:inline">{isExpanded ? "Hide" : "Show"}</span>
+          </div>
           <ChevronDown
-            size={20}
+            size={16}
             className={cn(
-              "text-slate-400 transition-transform duration-300",
-              isExpanded ? "rotate-180" : ""
+              "text-gray-400 transition-transform duration-200",
+              isExpanded && "rotate-180"
             )}
           />
         </div>
@@ -186,17 +102,20 @@ export function MessageReasoning({
 
       {/* Content */}
       {isExpanded && (
-        <div className="bg-slate-900/50 backdrop-blur-sm">
-          <ReasoningContent className="px-0 py-0">
-            {reasoning}
-          </ReasoningContent>
+        <div className="rounded-b-lg border border-t-0 border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
+          <div className="prose prose-sm max-w-none dark:prose-invert">
+            <div className="whitespace-pre-wrap text-gray-700 dark:text-gray-300 leading-relaxed">
+              {displayText}
+              {isLoading && (
+                <span className="ml-1 inline-block h-4 w-0.5 animate-pulse bg-blue-500"></span>
+              )}
+            </div>
+          </div>
           
           {isLoading && (
-            <div className="flex items-center gap-2 px-4 pb-4">
-              <div className="w-2 h-2 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-full animate-pulse"></div>
-              <span className="text-xs text-slate-400 font-medium">
-                Processing next step...
-              </span>
+            <div className="mt-3 flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <Loader2 size={12} className="animate-spin" />
+              <span>Reasoning in progress...</span>
             </div>
           )}
         </div>
