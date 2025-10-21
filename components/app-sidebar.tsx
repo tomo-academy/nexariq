@@ -78,7 +78,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                     />
                   </div>
                   <span className="font-semibold text-lg text-gray-900 dark:text-gray-100">
-                    DeepSeek
+                    TOMO CHAT
                   </span>
                 </div>
               </Link>

@@ -22,7 +22,7 @@ export const Greeting = () => {
             <path d="M12 12L22 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
-        <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">DeepSeek</h1>
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">TOMO CHAT</h1>
       </motion.div>
       
       <motion.div
@@ -32,7 +32,7 @@ export const Greeting = () => {
         initial={{ opacity: 0, y: 10 }}
         transition={{ delay: 0.5 }}
       >
-        Hello! I'm DeepSeek, your AI assistant.
+        Hello! I'm TOMO CHAT, your advanced AI assistant.
       </motion.div>
       
       <motion.div
@@ -42,8 +42,9 @@ export const Greeting = () => {
         initial={{ opacity: 0, y: 10 }}
         transition={{ delay: 0.6 }}
       >
-        I can help you with a wide range of tasks including answering questions, writing, analysis, coding, and more. 
-        What would you like to work on today?
+        I'm powered by cutting-edge AI technology and can help you with complex reasoning, creative writing, 
+        code generation, analysis, and much more. Experience advanced AI conversations with full transparency 
+        in my thinking process.
       </motion.div>
       
       {/* DeepSeek-style feature highlights */}

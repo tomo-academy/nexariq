@@ -310,7 +310,7 @@ function PureMultimodalInput({
                     }
                   }
                 }}
-                placeholder="Message DeepSeek..."
+                placeholder="Message TOMO CHAT..."
                 className="max-h-[200px] min-h-[24px] w-full resize-none border-0 bg-transparent text-sm leading-6 text-gray-900 placeholder-gray-500 outline-none dark:text-gray-100 dark:placeholder-gray-400"
                 rows={1}
                 data-testid="multimodal-input"

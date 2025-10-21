@@ -1253,3 +1253,38 @@ export const WarningIcon = ({ size = 16 }: { size?: number }) => {
     </svg>
   );
 };
+
+export const SearchIcon = ({ size = 16 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="11" cy="11" r="8"/>
+    <path d="m21 21-4.35-4.35"/>
+  </svg>
+);
+
+export const SettingsIcon = ({ size = 16 }: { size?: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M12 1v6m0 6v6"/>
+    <path d="m21 12-6 0m-6 0-6 0"/>
+    <path d="m16.24 7.76-4.24 4.24m-4.24 4.24-4.24-4.24"/>
+    <path d="M7.76 16.24l4.24-4.24m4.24-4.24l4.24 4.24"/>
+  </svg>
+);
