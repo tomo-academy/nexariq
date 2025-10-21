@@ -11,9 +11,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  outputFileTracingIncludes: {
-    '/api/**': ['./node_modules/**'],
-  },
+  // Temporarily disable output file tracing to avoid circular dependency issues
+  // outputFileTracingIncludes: {
+  //   '/api/**': ['./node_modules/**'],
+  // },
   // Optimize bundle size
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',

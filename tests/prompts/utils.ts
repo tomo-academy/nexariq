@@ -1,6 +1,11 @@
 import type { LanguageModelV2StreamPart } from "@ai-sdk/provider";
-import { generateId, type ModelMessage } from "ai";
+import type { ModelMessage } from "ai";
 import { TEST_PROMPTS } from "./basic";
+
+// Generate unique IDs for test purposes
+function generateId(): string {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
 
 export function compareMessages(
   firstMessage: ModelMessage,
