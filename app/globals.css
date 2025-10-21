@@ -479,3 +479,154 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* DeepSeek-specific enhancements */
+.deepseek-input {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+}
+
+.deepseek-input:focus-within {
+  box-shadow: 0 0 0 2px var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.deepseek-button {
+  transition: all 0.15s ease;
+  border-radius: 8px;
+}
+
+.deepseek-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.deepseek-card {
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid var(--color-border);
+}
+
+.deepseek-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.deepseek-sidebar {
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.dark .deepseek-sidebar {
+  background: rgba(30, 41, 59, 0.95);
+}
+
+.deepseek-message {
+  border-radius: 16px;
+  padding: 16px;
+  margin: 8px 0;
+}
+
+.deepseek-message.user {
+  background: linear-gradient(135deg, var(--color-primary), #4f46e5);
+  color: white;
+  margin-left: 20%;
+}
+
+.deepseek-message.assistant {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  margin-right: 20%;
+}
+
+.deepseek-crafting {
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.1), 
+    rgba(147, 51, 234, 0.1)
+  );
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.deepseek-crafting:hover {
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.15), 
+    rgba(147, 51, 234, 0.15)
+  );
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.deepseek-pulse {
+  animation: deepseek-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes deepseek-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.deepseek-slide-down {
+  animation: deepseek-slide-down 0.3s ease-out;
+}
+
+@keyframes deepseek-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.deepseek-slide-up {
+  animation: deepseek-slide-up 0.3s ease-out;
+}
+
+@keyframes deepseek-slide-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.deepseek-fade-in {
+  animation: deepseek-fade-in 0.4s ease-out;
+}
+
+@keyframes deepseek-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* DeepSeek gradient backgrounds */
+.deepseek-gradient-primary {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.deepseek-gradient-secondary {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+.deepseek-text-gradient {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
